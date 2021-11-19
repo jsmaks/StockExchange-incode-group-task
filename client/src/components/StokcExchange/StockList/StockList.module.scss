@@ -1,0 +1,72 @@
+.block__list {
+  margin-top: 50px;
+}
+.list {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  margin-bottom: 10px;
+  border-radius: 5px;
+  border-left: 5px solid #ff9800;
+  box-shadow: 2px -2px 5px 0 rgba(0, 0, 0, 0.1), -2px -2px 5px 0 rgba(0, 0, 0, 0.1), 2px 2px 5px 0 rgba(0, 0, 0, 0.1),
+    -2px 2px 5px 0 rgba(0, 0, 0, 0.1);
+  font-size: 20px;
+  letter-spacing: 0.5px;
+  transition: all 0.3s linear;
+}
+.item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+}
+.name {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 120px;
+  height: 30px;
+}
+.border {
+  border-bottom: 1px solid grey;
+}
+.title {
+  font-weight: 700;
+  letter-spacing: 1px;
+  height: 50px;
+  color: black;
+}
+.btn_Delete {
+  border: 0.3rem solid transparent;
+  border-radius: 2rem;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  padding: 8px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  transition-duration: 0.2s;
+  cursor: pointer;
+}
+.btn_Delete:hover {
+  background-color: #f44336;
+  color: white;
+  transform: perspective(1px) scale3d(1.044, 1.044, 1) translateZ(0);
+}
+
+.negative {
+  color: #f44336;
+  &::before {
+    content: '-';
+  }
+}
+.positive {
+  color: #4caf50;
+  &::before {
+    content: '+';
+  }
+}

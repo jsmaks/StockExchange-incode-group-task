@@ -7,14 +7,6 @@ const cors = require('cors');
 const FETCH_INTERVAL = 5000;
 const PORT = process.env.PORT || 4000;
 
-const tickers = [
-  'AAPL', // Apple
-  'GOOGL', // Alphabet
-  'MSFT', // Microsoft
-  'AMZN', // Amazon
-  'FB', // Facebook
-  'TSLA', // Tesla
-];
 
 function randomValue(min = 0, max = 1, precision = 0) {
   const random = Math.random() * (max - min) + min;
@@ -23,10 +15,20 @@ function randomValue(min = 0, max = 1, precision = 0) {
 
 function utcDate() {
   const now = new Date();
-  return new Date(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds());
+  return new Date(
+    now.getUTCFullYear(), 
+    now.getUTCMonth(), 
+    now.getUTCDate(), 
+    now.getUTCHours(), 
+    now.getUTCMinutes(), 
+    now.getUTCSeconds()
+    );
 }
 
 function getQuotes(socket) {
+  const tickerList = socket.handshake.query.tickers;
+
+  const tickers = tickerList ? tickerList.split(',') : [];
 
   const quotes = tickers.map(ticker => ({
     ticker,
@@ -43,13 +45,14 @@ function getQuotes(socket) {
 }
 
 function trackTickers(socket) {
+  const customInterval = socket.handshake.query.defaultInterval;
   // run the first time immediately
   getQuotes(socket);
 
   // every N seconds
   const timer = setInterval(function() {
     getQuotes(socket);
-  }, FETCH_INTERVAL);
+  }, customInterval || FETCH_INTERVAL);
 
   socket.on('disconnect', function() {
     clearInterval(timer);
@@ -71,7 +74,7 @@ app.get('/', function(req, res) {
 });
 
 socketServer.on('connection', (socket) => {
-  socket.on('start', () => {
+    socket.on('start', () => {
     trackTickers(socket);
   });
 });
